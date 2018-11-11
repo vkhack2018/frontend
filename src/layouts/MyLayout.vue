@@ -7,7 +7,7 @@
 
         <q-toolbar-title>
           <div class="row items-center">
-            <div class="q-pr-xs">pony.pro</div>
+            <img src="../statics/logo.png" style="!important; height: 48px"/>
             <q-btn flat class="q-mr-xs">Добавить ссылки</q-btn>
             <q-btn flat class="q-mr-xs">Аналитика</q-btn>
           </div>

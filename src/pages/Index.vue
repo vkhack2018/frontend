@@ -108,17 +108,12 @@ export default {
     return {
       currentPonyFrame: '01',
       waitingInput: true,
-      videoLink: 'https://www.youtube.com/watch?v=wg-TMymYSwE',
+      videoLink: '',
       goButtonText: 'Go',
       shortLinks: [],
       links: [
         {
           id: 0,
-          url: 'https://eldorado.ru/~JBL',
-          description: 'Колонка'
-        },
-        {
-          id: 1,
           url: '',
           description: ''
         }
@@ -178,7 +173,7 @@ export default {
 
       longLinks = longLinks.filter(link => link.long !== '')
 
-      console.log(longLinks)
+      console.log('links', longLinks)
       const shortLinks = (await axios.post(config.host + '/links/batch', longLinks)).data
       console.log(shortLinks
       )

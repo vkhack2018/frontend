@@ -4,11 +4,31 @@
       <div class="fixed"  style="width: calc(100% / 3  - 48px - 12px)">
         <q-card>
           <q-card-title>
-            {{bloggerInfo.name}}
+            <div class="row">
+              <div class="col">
+                <q-card-media>
+                  <img :src="bloggerInfo.channel_pic_url" height="128px" style="!important; width: 128px">
+                </q-card-media>
+              </div>
+              <div class="col">
+                {{bloggerInfo.name}}
+                <q-chip square class="q-mb-xs" icon="fas fa-user-circle" color="primary">
+                  {{bloggerInfo.subscribers}}
+                </q-chip>
+
+                <q-chip square class="q-mb-xs" icon="fas fa-mouse-pointer" color="primary">
+                  {{bloggerInfo.total_clicks}}
+                </q-chip>
+
+                <q-chip square class="q-mb-xs" icon="fas fa-bullseye" color="primary">
+                  {{bloggerInfo.sponsor_total_clicks}}
+                </q-chip>
+              </div>
+
+            </div>
+
           </q-card-title>
-          <q-card-separator/>
           <q-card-main>
-            <div class="q-subheading">{{bloggerInfo.content.length}} видео со ссылками</div>
           </q-card-main>
         </q-card>
       </div>
@@ -18,8 +38,8 @@
       <div class="row">
         <div class="col-6" v-for="video in bloggerInfo.content" v-bind:key="video.id">
           <q-card
-                  class="q-mb-md q-ml-md"
-                  @click.native="openVideo(video.id)"
+            class="q-mb-md q-ml-md"
+            @click.native="openVideo(video.id)"
           >
             <q-card-media>
               <img :src="video.picurl">
@@ -42,7 +62,7 @@
                   {{video.dislikes}}
                 </q-chip>
               </div>
-
+              Всего
               <div class="row">
                 <q-chip square class="q-mr-xs" icon="fas fa-link" color="primary">
                   {{video.links_count}}
@@ -74,19 +94,18 @@ import axios from 'axios'
 import config from '../config'
 
 export default {
-  name: 'Content',
+  name: 'BloggersForSponsor',
   data: function () {
     return {
       bloggerInfo: null
     }
   },
   methods: {
-    openVideo: function (id) {
-      this.$router.push({path: `videos/${id}`})
-    },
     getBloggerInfo: async function () {
       this.$q.loading.show()
-      const bloggerInfo = (await axios.get(config.host + `/blogger/${config.bloggerId}/content`)).data
+      const bloggerId = this.$route.params.id
+      console.log(bloggerId)
+      const bloggerInfo = (await axios.get(config.host + `/blogger/${bloggerId}/links/sponsor/${config.sponsorId}`)).data
       this.bloggerInfo = bloggerInfo
       console.log(bloggerInfo)
       this.$q.loading.hide()

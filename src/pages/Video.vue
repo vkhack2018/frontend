@@ -111,27 +111,22 @@ export default {
   name: 'Video',
   data: function () {
     return {
-      contentInfo: {
-        name: 'video',
-        links: [
-          {
-            url: 'dd'
-          }
-        ]
-      }
+      contentInfo: null
     }
   },
   methods: {
-    getContentInfo: async function () {
+    getBloggerInfo: async function () {
       const contentId = this.$route.params.id
       console.log(contentId)
+      this.$q.loading.show()
       const contentInfo = (await axios.get(config.host + `/content/${contentId}`)).data
       this.contentInfo = contentInfo
       console.log(contentInfo)
+      this.$q.loading.hide()
     }
   },
   mounted: async function () {
-    await this.getContentInfo()
+    await this.getBloggerInfo()
   }
 
 }
